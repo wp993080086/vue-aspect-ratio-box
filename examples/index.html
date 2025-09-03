@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="/favicon.ico" />
+		<title>示例</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+				line-height: 1.6;
+				color: #333333;
+				background-color: #f5f5f5;
+			}
+
+			.example-wrapper {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+
+			h1 {
+				text-align: center;
+				margin-bottom: 40px;
+				color: #2c3e50;
+			}
+
+			.example-section {
+				background: white;
+				border-radius: 8px;
+				padding: 30px;
+				margin-bottom: 30px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			.example-title {
+				font-size: 1.5em;
+				margin-bottom: 20px;
+				color: #34495e;
+				border-bottom: 2px solid #3498db;
+				padding-bottom: 10px;
+			}
+
+			.example-group {
+				width: 100%;
+				display: flex;
+				gap: 20px;
+			}
+
+			.example-group-item {
+				flex: 1;
+				height: fit-content;
+			}
+
+			.demo-item {
+				border-radius: 8px;
+				overflow: hidden;
+			}
+
+			.demo-content {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				color: white;
+				font-weight: bold;
+				text-align: center;
+				flex-direction: column;
+			}
+
+			.code-block {
+				background: #2c3e50;
+				color: #ecf0f1;
+				padding: 20px;
+				border-radius: 4px;
+				overflow-x: auto;
+				font-family: 'Courier New', monospace;
+				margin-top: 15px;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="example-wrapper">
+				<h1>Vue Aspect Ratio Wrapper - 示例</h1>
+
+				<!-- 基本比例示例 -->
+				<div class="example-section">
+					<h2 class="example-title">1. 基本比例示例（自适应父容器宽度）</h2>
+					<div class="example-group">
+						<div class="example-group-item">
+							<aspect-ratio-wrapper :ratio="[16, 9]">
+								<div class="demo-content demo-item">
+									<p>16:9 比例</p>
+									<p>自适应宽度</p>
+								</div>
+							</aspect-ratio-wrapper>
+						</div>
+						<div class="example-group-item">
+							<aspect-ratio-wrapper :ratio="[4, 3]">
+								<div class="demo-content demo-item">
+									<p>4:3 比例</p>
+									<p>自适应宽度</p>
+								</div>
+							</aspect-ratio-wrapper>
+						</div>
+					</div>
+					<div class="code-block">&lt;aspect-ratio-wrapper :ratio="[16, 9]"&gt; &lt;div&gt;16:9 比例内容&lt;/div&gt; &lt;/aspect-ratio-wrapper&gt;</div>
+				</div>
+
+				<!-- 指定宽度示例 -->
+				<div class="example-section">
+					<h2 class="example-title">2. 指定宽度示例</h2>
+					<div class="example-group">
+						<div class="example-group-item">
+							<aspect-ratio-wrapper :ratio="[3, 4]" :width="240">
+								<div class="demo-content demo-item">
+									<p>宽度: 240</p>
+									<p>比例: 3:4</p>
+									<p>适合: 卡片，图像</p>
+								</div>
+							</aspect-ratio-wrapper>
+						</div>
+						<div class="example-group-item">
+							<aspect-ratio-wrapper :ratio="[2, 3]" width="200px">
+								<div class="demo-content demo-item">
+									<p>宽度: 200px</p>
+									<p>比例: 2:3</p>
+									<p>适合: 卡片，图像</p>
+								</div>
+							</aspect-ratio-wrapper>
+						</div>
+					</div>
+					<div class="code-block">&lt;aspect-ratio-wrapper :ratio="[3, 4]" :width="240"&gt; &lt;div&gt;固定宽度内容&lt;/div&gt; &lt;/aspect-ratio-wrapper&gt;</div>
+				</div>
+
+				<!-- 指定高度示例 -->
+				<div class="example-section">
+					<h2 class="example-title">3. 指定高度示例</h2>
+					<div class="example-group">
+						<div class="example-group-item">
+							<aspect-ratio-wrapper :ratio="[1, 1]" height="150px">
+								<div class="demo-content demo-item">
+									<p>高度: 150px</p>
+									<p>比例: 1:1</p>
+									<p>适合：头像，卡片</p>
+								</div>
+							</aspect-ratio-wrapper>
+						</div>
+						<div class="example-group-item">
+							<aspect-ratio-wrapper :ratio="[16, 9]" :height="200">
+								<div class="demo-content demo-item">
+									<p>高度: 200px</p>
+									<p>比例: 16:9</p>
+									<p>适合：视频，壁纸</p>
+								</div>
+							</aspect-ratio-wrapper>
+						</div>
+					</div>
+					<div class="code-block">&lt;aspect-ratio-wrapper :ratio="[16, 9]" height="200px"&gt; &lt;div&gt;固定高度内容&lt;/div&gt; &lt;/aspect-ratio-wrapper&gt;</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+		<script>
+			const { createApp, defineComponent, computed, ref, onMounted, onUnmounted } = Vue
+
+			// 直接定义 AspectRatioWrapper 组件（纯 Vue 3 版本）
+			const AspectRatioWrapper = defineComponent({
+				name: 'AspectRatioWrapper',
+				props: {
+					ratio: {
+						type: Array,
+						required: true,
+						validator: (value) => {
+							return Array.isArray(value) && value.length === 2 && value.every((v) => typeof v === 'number' && v > 0)
+						},
+					},
+					width: {
+						type: [Number, String],
+						default: undefined,
+					},
+					height: {
+						type: [Number, String],
+						default: undefined,
+					},
+				},
+				setup(props) {
+					const wrapperRef = ref()
+					const calculateRef = ref()
+					const parentWidth = ref(0)
+
+					/**
+					 * @description 计算格式化
+					 */
+					const calculateFormat = (value) => {
+						const newValue = typeof value === 'number' ? `${value}px` : value
+						return newValue
+					}
+
+					/**
+					 * @description 计算比例百分比
+					 * @description 如果有宽 则是根据宽求高，反之则是根据高求宽。
+					 */
+					const aspectRatioPercent = computed(() => {
+						const [w, h] = props.ratio || [1, 1]
+						let ratio = 0
+						if (props.width != undefined) {
+							ratio = (h / w) * 100
+						} else {
+							ratio = (w / h) * 100
+						}
+						return ratio.toFixed(2)
+					})
+
+					/**
+					 * @description 获取父元素宽度
+					 */
+					const updateParentWidth = () => {
+						if (wrapperRef.value && wrapperRef.value.parentElement) {
+							parentWidth.value = wrapperRef.value.parentElement.clientWidth
+						}
+					}
+
+					/**
+					 * @description 监听窗口大小变化
+					 */
+					const handleResize = () => {
+						updateParentWidth()
+					}
+
+					/**
+					 * @description 生命周期-装载
+					 */
+					onMounted(() => {
+						updateParentWidth()
+						window.addEventListener('resize', handleResize)
+					})
+
+					/**
+					 * @description 生命周期-卸载
+					 */
+					onUnmounted(() => {
+						window.removeEventListener('resize', handleResize)
+					})
+
+					/**
+					 * @description 计算wrapper样式
+					 */
+					const wrapperStyle = computed(() => {
+						const style = {}
+						if (props.width !== undefined) {
+							// 如果指定了width，使用指定的宽度
+							style.width = calculateFormat(props.width)
+						} else if (props.height !== undefined) {
+							// 如果指定了height，使用指定的高度
+							style.height = calculateFormat(props.height)
+							style.width = 'fit-content'
+						}
+						// 如果都没指定，则不处理，自然会通过CSS自然继承
+						return style
+					})
+
+					/**
+					 * @description 计算shell样式（现代浏览器）
+					 */
+					const shellStyleModern = computed(() => {
+						const style = {}
+						if (props.width !== undefined) {
+							// 如果指定了width，使用指定的宽度
+							style.width = typeof props.width === 'number' ? `${props.width}px` : '100%'
+						} else if (props.height !== undefined) {
+							// 如果指定了height，使用指定的高度
+							style.height = typeof props.height === 'number' ? `${props.height}px` : '100%'
+						}
+						// 设置比例
+						style.aspectRatio = `${props.ratio[0]} / ${props.ratio[1]}`
+						return style
+					})
+
+					/**
+					 * @description 计算shell样式（旧代浏览器）
+					 * @description 高度计算原理：百分比的padding，是相对于父容器的宽度来计算的
+					 */
+					const shellStyleAncient = computed(() => {
+						const style = {
+							position: 'relative',
+						}
+						// 如果指定了宽度 则使用padding-top撑起高度
+						if (props.width !== undefined) {
+							style.width = '100%'
+							style.paddingTop = `${aspectRatioPercent}%`
+						} else if (props.height !== undefined) {
+							// 如果指定了height
+							style.height = '100%'
+							if (calculateRef.value) {
+								const h = calculateRef.value.clientHeight
+								style.width = `${(h * props.ratio[0]) / props.ratio[0]}px`
+							}
+						}
+						return style
+					})
+
+					return {
+						wrapperRef,
+						wrapperStyle,
+						shellStyleModern,
+						shellStyleAncient,
+						calculateFormat,
+					}
+				},
+				template: `<div ref="wrapperRef" class="aspect-ratio-wrapper" :style="wrapperStyle">
+				<!-- 现代的 -->
+				<div class="aspect-ratio-shell-modern" :style="shellStyleModern">
+					<slot />
+				</div>
+				<!-- 旧代的 -->
+				<div class="aspect-ratio-shell-ancient" :style="shellStyleAncient">
+					<div ref="calculateRef" class="aspect-ratio-calculate" :style="{ height: calculateFormat(props?.height || undefined) }" />
+					<div class="aspect-ratio-content">
+						<slot />
+					</div>
+				</div>
+			</div>`,
+			})
+
+			// 创建 Vue 应用
+			const app = createApp({})
+			app.component('AspectRatioWrapper', AspectRatioWrapper)
+			app.mount('#app')
+		</script>
+
+		<style>
+			/* 现代浏览器 */
+			@supports (aspect-ratio: 1 / 1) {
+				.aspect-ratio-shell-ancient {
+					display: none !important;
+				}
+			}
+
+			/* 兼容旧代浏览器 */
+			@supports not (aspect-ratio: 1 / 1) {
+				.aspect-ratio-shell-modern {
+					display: none !important;
+				}
+				.aspect-ratio-content {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+				}
+			}
+		</style>
+	</body>
+</html>
