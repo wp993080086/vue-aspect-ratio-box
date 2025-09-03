@@ -1,4 +1,4 @@
-# Vue Aspect Ratio Wrapper
+# Vue Aspect Ratio Box
 
 中文文档 | [English](./README.md)
 
@@ -22,11 +22,11 @@
 ## 安装
 
 ```bash
-npm install vue-aspect-ratio-wrapper
+npm install vue-aspect-ratio-box
 # 或
-yarn add vue-aspect-ratio-wrapper
+yarn add vue-aspect-ratio-box
 # 或
-pnpm add vue-aspect-ratio-wrapper
+pnpm add vue-aspect-ratio-box
 ```
 
 ## 使用方法
@@ -37,11 +37,11 @@ pnpm add vue-aspect-ratio-wrapper
 
 ```javascript
 import { createApp } from 'vue'
-import VueAspectRatioWrapper from 'vue-aspect-ratio-wrapper'
+import VueAspectRatioBox from 'vue-aspect-ratio-box'
 import App from './App.vue'
 
 const app = createApp(App)
-app.use(VueAspectRatioWrapper)
+app.use(VueAspectRatioBox)
 app.mount('#app')
 ```
 
@@ -49,19 +49,19 @@ app.mount('#app')
 
 ```javascript
 import Vue from 'vue'
-import VueAspectRatioWrapper from 'vue-aspect-ratio-wrapper'
+import VueAspectRatioBox from 'vue-aspect-ratio-box'
 
-Vue.use(VueAspectRatioWrapper)
+Vue.use(VueAspectRatioBox)
 ```
 
 ### 局部注册
 
 ```javascript
-import { AspectRatioWrapper } from 'vue-aspect-ratio-wrapper'
+import { AspectRatioBox } from 'vue-aspect-ratio-box'
 
 export default {
 	components: {
-		AspectRatioWrapper,
+		AspectRatioBox,
 	},
 }
 ```
@@ -71,22 +71,22 @@ export default {
 ```vue
 <template>
 	<!-- 16:9 比例，自适应父容器宽度 -->
-	<AspectRatioWrapper :ratio="[16, 9]">
+	<AspectRatioBox :ratio="[16, 9]">
 		<img src="your-image.jpg" alt="示例图片" />
-	</AspectRatioWrapper>
+	</AspectRatioBox>
 
 	<!-- 3:4 比例，指定宽度为 300，默认单位px -->
-	<AspectRatioWrapper :ratio="[3, 4]" :width="300">
+	<AspectRatioBox :ratio="[3, 4]" :width="300">
 		<div class="content">
 			<h3>标题</h3>
 			<p>内容区域</p>
 		</div>
-	</AspectRatioWrapper>
+	</AspectRatioBox>
 
 	<!-- 1:1 比例，指定高度为 200px -->
-	<AspectRatioWrapper :ratio="[1, 1]" height="200px">
+	<AspectRatioBox :ratio="[1, 1]" height="200px">
 		<div class="square-content">正方形内容</div>
-	</AspectRatioWrapper>
+	</AspectRatioBox>
 </template>
 ```
 
@@ -119,11 +119,11 @@ export default {
 
 ```vue
 <template>
-	<AspectRatioWrapper :ratio="[16, 9]">
+	<AspectRatioBox :ratio="[16, 9]">
 		<video controls class="video-container">
 			<source src="video.mp4" type="video/mp4" />
 		</video>
-	</AspectRatioWrapper>
+	</AspectRatioBox>
 </template>
 
 <style>
@@ -139,12 +139,12 @@ export default {
 ```vue
 <template>
 	<div class="card-grid">
-		<AspectRatioWrapper :ratio="[1, 1]" :width="200">
+		<AspectRatioBox :ratio="[1, 1]" :width="200">
 			<div class="card">
 				<p>卡片标题</p>
 				<p>卡片内容</p>
 			</div>
-		</AspectRatioWrapper>
+		</AspectRatioBox>
 	</div>
 </template>
 
@@ -167,7 +167,7 @@ export default {
 组件提供完整的 TypeScript 类型定义：
 
 ```typescript
-import { AspectRatioWrapper, AspectRatioProps } from 'vue-aspect-ratio-wrapper'
+import { AspectRatioBox, AspectRatioProps } from 'vue-aspect-ratio-box'
 
 // Props 类型
 interface AspectRatioProps {
@@ -185,7 +185,7 @@ interface AspectRatioProps {
 
 ## 许可证
 
-MIT License
+MIT License - 详情请见 [LICENSE](LICENSE) 文件
 
 ## 贡献
 

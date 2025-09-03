@@ -1,19 +1,19 @@
 import { App } from 'vue-demi'
-import AspectRatioWrapper from './AspectRatioWrapper.vue'
+import AspectRatioBox from './AspectRatioBox.vue'
 import type { AspectRatioProps } from './types'
 
-export { AspectRatioWrapper }
+export { AspectRatioBox }
 export type { AspectRatioProps }
 
 // Vue 3 plugin install function
 const install = (app: App) => {
-  app.component('AspectRatioWrapper', AspectRatioWrapper)
+  app.component('AspectRatioBox', AspectRatioBox)
 }
 
 // Vue 2 compatible install function
 const VueAspectRatioWrapper = {
   install(Vue: any) {
-    Vue.component('AspectRatioWrapper', AspectRatioWrapper)
+    Vue.component('AspectRatioBox', AspectRatioBox)
   }
 }
 
@@ -26,4 +26,4 @@ export default VueAspectRatioWrapper
 export { install }
 
 // Named exports for tree-shaking
-// AspectRatioWrapper component is already exported above
+// AspectRatioBox component is already exported above

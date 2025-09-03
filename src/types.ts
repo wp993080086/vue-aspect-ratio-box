@@ -24,7 +24,7 @@ export type AspectRatioWrapperComponent = DefineComponent<AspectRatioProps>
 
 declare module '@vue/runtime-core' {
   interface GlobalComponents {
-    AspectRatioWrapper: AspectRatioWrapperComponent
+    AspectRatioBox: AspectRatioWrapperComponent
   }
 }
 

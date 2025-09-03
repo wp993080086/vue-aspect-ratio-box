@@ -1,5 +1,5 @@
 <template>
-	<div ref="wrapperRef" class="aspect-ratio-wrapper" :style="wrapperStyle">
+	<div ref="wrapperRef" class="aspect-ratio-box" :style="wrapperStyle">
 		<!-- 现代的 -->
 		<div class="aspect-ratio-shell-modern" :style="shellStyleModern">
 			<slot />
@@ -19,7 +19,7 @@ import { defineComponent, computed, ref, onMounted, onUnmounted, PropType } from
 import type { AspectRatioProps } from './types'
 
 export default defineComponent({
-	name: 'AspectRatioWrapper',
+	name: 'AspectRatioBox',
 	props: {
 		ratio: {
 			type: Array as PropType<Array<number>>,

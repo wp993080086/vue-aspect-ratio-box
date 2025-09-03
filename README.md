@@ -1,4 +1,4 @@
-# Vue Aspect Ratio Wrapper
+# Vue Aspect Ratio Box
 
 [中文文档](./README_zh.md) | English
 
@@ -16,11 +16,11 @@ A Vue.js component for maintaining aspect ratios, supporting both Vue 2 and Vue 
 ## Installation
 
 ```bash
-npm install vue-aspect-ratio-wrapper
+npm install vue-aspect-ratio-box
 # or
-yarn add vue-aspect-ratio-wrapper
+yarn add vue-aspect-ratio-box
 # or
-pnpm add vue-aspect-ratio-wrapper
+pnpm add vue-aspect-ratio-box
 ```
 
 ## Usage
@@ -31,11 +31,11 @@ pnpm add vue-aspect-ratio-wrapper
 
 ```javascript
 import { createApp } from 'vue'
-import VueAspectRatioWrapper from 'vue-aspect-ratio-wrapper'
+import VueAspectRatioBox from 'vue-aspect-ratio-box'
 import App from './App.vue'
 
 const app = createApp(App)
-app.use(VueAspectRatioWrapper)
+app.use(VueAspectRatioBox)
 app.mount('#app')
 ```
 
@@ -43,19 +43,19 @@ app.mount('#app')
 
 ```javascript
 import Vue from 'vue'
-import VueAspectRatioWrapper from 'vue-aspect-ratio-wrapper'
+import VueAspectRatioBox from 'vue-aspect-ratio-box'
 
-Vue.use(VueAspectRatioWrapper)
+Vue.use(VueAspectRatioBox)
 ```
 
 ### Local Registration
 
 ```javascript
-import { AspectRatioWrapper } from 'vue-aspect-ratio-wrapper'
+import { AspectRatioBox } from 'vue-aspect-ratio-box'
 
 export default {
   components: {
-    AspectRatioWrapper
+    AspectRatioBox
   }
 }
 ```
@@ -65,19 +65,19 @@ export default {
 ```vue
 <template>
   <!-- 16:9 aspect ratio, adapts to parent width -->
-  <AspectRatioWrapper :ratio="[16, 9]">
+  <AspectRatioBox :ratio="[16, 9]">
     <img src="your-image.jpg" alt="Image" />
-  </AspectRatioWrapper>
+  </AspectRatioBox>
 
   <!-- Specify width, height calculated automatically -->
-  <AspectRatioWrapper :ratio="[4, 3]" :width="400">
+  <AspectRatioBox :ratio="[4, 3]" :width="400">
     <div>Your content here</div>
-  </AspectRatioWrapper>
+  </AspectRatioBox>
 
   <!-- Specify height, width calculated automatically -->
-  <AspectRatioWrapper :ratio="[16, 9]" :height="200">
+  <AspectRatioBox :ratio="[16, 9]" :height="200">
     <video src="your-video.mp4" controls></video>
-  </AspectRatioWrapper>
+  </AspectRatioBox>
 </template>
 ```
 
@@ -105,14 +105,14 @@ export default {
 ```vue
 <template>
   <div class="gallery">
-    <AspectRatioWrapper 
+    <AspectRatioBox 
       v-for="image in images" 
       :key="image.id"
       :ratio="[1, 1]" 
       class="gallery-item"
     >
       <img :src="image.url" :alt="image.title" />
-    </AspectRatioWrapper>
+    </AspectRatioBox>
   </div>
 </template>
 
@@ -135,13 +135,13 @@ export default {
 
 ```vue
 <template>
-  <AspectRatioWrapper :ratio="[16, 9]" class="video-container">
+  <AspectRatioBox :ratio="[16, 9]" class="video-container">
     <video 
       src="your-video.mp4" 
       controls 
       class="video-player"
     ></video>
-  </AspectRatioWrapper>
+  </AspectRatioBox>
 </template>
 
 <style>
@@ -162,7 +162,7 @@ export default {
 ```vue
 <template>
   <div class="card-grid">
-    <AspectRatioWrapper 
+    <AspectRatioBox 
       v-for="card in cards" 
       :key="card.id"
       :ratio="[3, 4]" 
@@ -172,7 +172,7 @@ export default {
         <h3>{{ card.title }}</h3>
         <p>{{ card.description }}</p>
       </div>
-    </AspectRatioWrapper>
+    </AspectRatioBox>
   </div>
 </template>
 ```
@@ -182,8 +182,8 @@ export default {
 The component includes complete TypeScript definitions:
 
 ```typescript
-import { AspectRatioWrapper } from 'vue-aspect-ratio-wrapper'
-import type { AspectRatioProps } from 'vue-aspect-ratio-wrapper'
+import { AspectRatioBox } from 'vue-aspect-ratio-box'
+import type { AspectRatioProps } from 'vue-aspect-ratio-box'
 
 // Props type
 interface AspectRatioProps {
@@ -226,8 +226,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for version history.
+### 1.0.0
 
----
-
-**Languages**: [English](README.md) | [中文](README_zh.md)
+- 🎉 initial release
+- ✨ supports Vue 2 and Vue 3
+- ✨ TypeScript support
+- ✨ flexible proportion control
+- ✨ responsive design

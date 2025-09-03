@@ -1,5 +1,5 @@
 {
-	"name": "vue-aspect-ratio-wrapper",
+	"name": "vue-aspect-ratio-box",
 	"version": "1.0.0",
 	"description": "Vue.js aspect ratio component (supports Vue 2/3, flexible width/height).",
 	"main": "dist/index.umd.js",
@@ -29,12 +29,12 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/wp993080086/vue-aspect-ratio-wrapper.git"
+		"url": "git+https://github.com/wp993080086/vue-aspect-ratio-box.git"
 	},
 	"bugs": {
-		"url": "https://github.com/wp993080086/vue-aspect-ratio-wrapper/issues"
+		"url": "https://github.com/wp993080086/vue-aspect-ratio-box/issues"
 	},
-	"homepage": "https://github.com/wp993080086/vue-aspect-ratio-wrapper#readme",
+	"homepage": "https://github.com/wp993080086/vue-aspect-ratio-box#readme",
 	"peerDependencies": {
 		"vue": "^2.6.0 || ^3.0.0"
 	},

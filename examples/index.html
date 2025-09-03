@@ -91,30 +91,30 @@
 	<body>
 		<div id="app">
 			<div class="example-wrapper">
-				<h1>Vue Aspect Ratio Wrapper - 示例</h1>
+				<h1>Vue Aspect Ratio Box - 示例</h1>
 
 				<!-- 基本比例示例 -->
 				<div class="example-section">
 					<h2 class="example-title">1. 基本比例示例（自适应父容器宽度）</h2>
 					<div class="example-group">
 						<div class="example-group-item">
-							<aspect-ratio-wrapper :ratio="[16, 9]">
+							<aspect-ratio-box :ratio="[16, 9]">
 								<div class="demo-content demo-item">
 									<p>16:9 比例</p>
 									<p>自适应宽度</p>
 								</div>
-							</aspect-ratio-wrapper>
+							</aspect-ratio-box>
 						</div>
 						<div class="example-group-item">
-							<aspect-ratio-wrapper :ratio="[4, 3]">
+							<aspect-ratio-box :ratio="[4, 3]">
 								<div class="demo-content demo-item">
 									<p>4:3 比例</p>
 									<p>自适应宽度</p>
 								</div>
-							</aspect-ratio-wrapper>
+							</aspect-ratio-box>
 						</div>
 					</div>
-					<div class="code-block">&lt;aspect-ratio-wrapper :ratio="[16, 9]"&gt; &lt;div&gt;16:9 比例内容&lt;/div&gt; &lt;/aspect-ratio-wrapper&gt;</div>
+					<div class="code-block">&lt;aspect-ratio-box :ratio="[16, 9]"&gt; &lt;div&gt;16:9 比例内容&lt;/div&gt; &lt;/aspect-ratio-box&gt;</div>
 				</div>
 
 				<!-- 指定宽度示例 -->
@@ -122,25 +122,25 @@
 					<h2 class="example-title">2. 指定宽度示例</h2>
 					<div class="example-group">
 						<div class="example-group-item">
-							<aspect-ratio-wrapper :ratio="[3, 4]" :width="240">
+							<aspect-ratio-box :ratio="[3, 4]" :width="240">
 								<div class="demo-content demo-item">
 									<p>宽度: 240</p>
 									<p>比例: 3:4</p>
 									<p>适合: 卡片，图像</p>
 								</div>
-							</aspect-ratio-wrapper>
+							</aspect-ratio-box>
 						</div>
 						<div class="example-group-item">
-							<aspect-ratio-wrapper :ratio="[2, 3]" width="200px">
+							<aspect-ratio-box :ratio="[2, 3]" width="200px">
 								<div class="demo-content demo-item">
 									<p>宽度: 200px</p>
 									<p>比例: 2:3</p>
 									<p>适合: 卡片，图像</p>
 								</div>
-							</aspect-ratio-wrapper>
+							</aspect-ratio-box>
 						</div>
 					</div>
-					<div class="code-block">&lt;aspect-ratio-wrapper :ratio="[3, 4]" :width="240"&gt; &lt;div&gt;固定宽度内容&lt;/div&gt; &lt;/aspect-ratio-wrapper&gt;</div>
+					<div class="code-block">&lt;aspect-ratio-box :ratio="[3, 4]" :width="240"&gt; &lt;div&gt;固定宽度内容&lt;/div&gt; &lt;/aspect-ratio-box&gt;</div>
 				</div>
 
 				<!-- 指定高度示例 -->
@@ -148,25 +148,25 @@
 					<h2 class="example-title">3. 指定高度示例</h2>
 					<div class="example-group">
 						<div class="example-group-item">
-							<aspect-ratio-wrapper :ratio="[1, 1]" height="150px">
+							<aspect-ratio-box :ratio="[1, 1]" height="150px">
 								<div class="demo-content demo-item">
 									<p>高度: 150px</p>
 									<p>比例: 1:1</p>
 									<p>适合：头像，卡片</p>
 								</div>
-							</aspect-ratio-wrapper>
+							</aspect-ratio-box>
 						</div>
 						<div class="example-group-item">
-							<aspect-ratio-wrapper :ratio="[16, 9]" :height="200">
+							<aspect-ratio-box :ratio="[16, 9]" :height="200">
 								<div class="demo-content demo-item">
 									<p>高度: 200px</p>
 									<p>比例: 16:9</p>
 									<p>适合：视频，壁纸</p>
 								</div>
-							</aspect-ratio-wrapper>
+							</aspect-ratio-box>
 						</div>
 					</div>
-					<div class="code-block">&lt;aspect-ratio-wrapper :ratio="[16, 9]" height="200px"&gt; &lt;div&gt;固定高度内容&lt;/div&gt; &lt;/aspect-ratio-wrapper&gt;</div>
+					<div class="code-block">&lt;aspect-ratio-box :ratio="[16, 9]" height="200px"&gt; &lt;div&gt;固定高度内容&lt;/div&gt; &lt;/aspect-ratio-box&gt;</div>
 				</div>
 			</div>
 		</div>
@@ -175,9 +175,9 @@
 		<script>
 			const { createApp, defineComponent, computed, ref, onMounted, onUnmounted } = Vue
 
-			// 直接定义 AspectRatioWrapper 组件（纯 Vue 3 版本）
-			const AspectRatioWrapper = defineComponent({
-				name: 'AspectRatioWrapper',
+			// 直接定义 AspectRatioBox 组件（纯 Vue 3 版本）
+			const AspectRatioBox = defineComponent({
+				name: 'AspectRatioBox',
 				props: {
 					ratio: {
 						type: Array,
@@ -319,7 +319,7 @@
 						calculateFormat,
 					}
 				},
-				template: `<div ref="wrapperRef" class="aspect-ratio-wrapper" :style="wrapperStyle">
+				template: `<div ref="wrapperRef" class="aspect-ratio-box" :style="wrapperStyle">
 				<!-- 现代的 -->
 				<div class="aspect-ratio-shell-modern" :style="shellStyleModern">
 					<slot />
@@ -336,7 +336,7 @@
 
 			// 创建 Vue 应用
 			const app = createApp({})
-			app.component('AspectRatioWrapper', AspectRatioWrapper)
+			app.component('AspectRatioBox', AspectRatioBox)
 			app.mount('#app')
 		</script>
 

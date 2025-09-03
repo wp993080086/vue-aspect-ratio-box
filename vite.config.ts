@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(fileURLToPath(new URL('.', import.meta.url)), 'src/index.ts'),
-      name: 'VueAspectRatioWrapper',
+      name: 'VueAspectRatioBox',
       fileName: (format) => `index.${format}.js`,
       formats: ['es', 'umd']
     },
