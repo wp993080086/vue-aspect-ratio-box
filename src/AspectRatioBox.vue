@@ -1,10 +1,10 @@
 <template>
 	<div ref="wrapperRef" class="aspect-ratio-box" :style="wrapperStyle">
-		<!-- 现代的 -->
+		<!-- 现代浏览器 -->
 		<div class="aspect-ratio-shell-modern" :style="shellStyleModern">
 			<slot />
 		</div>
-		<!-- 旧代的 -->
+		<!-- 旧版浏览器 -->
 		<div class="aspect-ratio-shell-ancient" :style="shellStyleAncient">
 			<div v-if="$props.height" ref="calculateRef" class="aspect-ratio-calculate" :style="{ height: typeof $props.height === 'number' ? `${$props.height}px` : $props.height }" />
 			<div class="aspect-ratio-content">
@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, onMounted, onUnmounted, PropType } from 'vue-demi'
-import type { AspectRatioProps } from './types'
+import { defineComponent, computed, ref, onMounted, onUnmounted, PropType } from 'vue'
+import type { AspectRatioProps } from './AspectRatioBox'
 
 export default defineComponent({
 	name: 'AspectRatioBox',
@@ -41,6 +41,37 @@ export default defineComponent({
 		const wrapperRef = ref<HTMLElement>()
 		const calculateRef = ref<HTMLElement>()
 		const parentWidth = ref(0)
+
+		/**
+		 * @description 注入CSS样式
+		 */
+		const injectCSS = () => {
+			const styleId = 'vue-aspect-ratio-box-styles'
+			if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
+				const style = document.createElement('style')
+				style.id = styleId
+				style.textContent = `
+					@supports (aspect-ratio: 1 / 1) {
+						.aspect-ratio-shell-ancient {
+							display: none !important;
+						}
+					}
+					@supports not (aspect-ratio: 1 / 1) {
+						.aspect-ratio-shell-modern {
+							display: none !important;
+						}
+						.aspect-ratio-content {
+							position: absolute;
+							top: 0;
+							left: 0;
+							width: 100%;
+							height: 100%;
+						}
+					}
+				`
+				document.head.appendChild(style)
+			}
+		}
 
 		/**
 		 * @description 计算格式化
@@ -85,6 +116,7 @@ export default defineComponent({
 		 * @description 生命周期-装载
 		 */
 		onMounted(() => {
+			injectCSS()
 			updateParentWidth()
 			window.addEventListener('resize', handleResize)
 		})
@@ -131,7 +163,7 @@ export default defineComponent({
 		})
 
 		/**
-		 * @description 计算shell样式（旧代浏览器）
+		 * @description 计算shell样式（旧版浏览器）
 		 * @description 高度计算原理：百分比的padding，是相对于父容器的宽度来计算的
 		 */
 		const shellStyleAncient = computed(() => {
@@ -147,7 +179,7 @@ export default defineComponent({
 				style.height = '100%'
 				if (calculateRef.value) {
 					const h = calculateRef.value.clientHeight
-					style.width = `${(h * props.ratio[0]) / props.ratio[0]}px`
+					style.width = `${(h * props.ratio[0]) / props.ratio[1]}px`
 				}
 			}
 			return style
@@ -163,26 +195,3 @@ export default defineComponent({
 	},
 })
 </script>
-
-<style scoped>
-/* 现代浏览器 */
-@supports (aspect-ratio: 1 / 1) {
-	.aspect-ratio-shell-ancient {
-		display: none !important;
-	}
-}
-
-/* 兼容旧代浏览器 */
-@supports not (aspect-ratio: 1 / 1) {
-	.aspect-ratio-shell-modern {
-		display: none !important;
-	}
-	.aspect-ratio-content {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
-}
-</style>

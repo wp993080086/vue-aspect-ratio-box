@@ -1,31 +1,16 @@
-import { DefineComponent } from 'vue-demi'
-
 export interface AspectRatioProps {
-  /**
-   * 宽高比例 [width, height]
-   * @example [16, 9] 表示 16:9 的比例
-   */
-  ratio: [number, number]
-  
-  /**
-   * 指定宽度，可以是数字(px)或字符串
-   * 当指定width时，高度会根据比例自动计算
-   */
-  width?: number | string
-  
-  /**
-   * 指定高度，可以是数字(px)或字符串
-   * 当指定height时，宽度会根据比例自动计算
-   */
-  height?: number | string
+  ratio?: [number, number]
+  width?: string | number
+  height?: string | number
 }
 
-export type AspectRatioWrapperComponent = DefineComponent<AspectRatioProps>
+export interface AspectRatioWrapperComponent {
+  AspectRatioBox: any
+}
 
+// 扩展 Vue 全局组件类型
 declare module '@vue/runtime-core' {
   interface GlobalComponents {
-    AspectRatioBox: AspectRatioWrapperComponent
+    AspectRatioBox: AspectRatioWrapperComponent['AspectRatioBox']
   }
 }
-
-export {}

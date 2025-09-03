@@ -2,16 +2,24 @@
 
 [中文文档](./README_zh.md) | English
 
-A Vue.js component for maintaining aspect ratios, supporting both Vue 2 and Vue 3 with flexible width/height control.
+A Vue.js component for maintaining aspect ratios, supporting Vue 3 with flexible width/height control.
 
 ## Features
 
 - 🎯 **Precise Ratio Control**: Support for any aspect ratio settings
 - 🔧 **Flexible Size Control**: Specify width or height, automatically calculate the other dimension
 - 📱 **Responsive Design**: Adapts to parent container width by default
-- 🚀 **Vue 2/3 Compatible**: Supports both Vue 2.6+ and Vue 3
+- 🚀 **Vue 3 Compatible**: Supports Vue 3.0+
 - 📝 **TypeScript Support**: Complete type definitions
 - 🎨 **Zero Style Intrusion**: Does not affect content styles
+- 😄 **Compatibility**: Downgraded compatibility
+
+
+## Legend
+
+![examples 1](./examples/examples1.png)
+![examples 2](./examples/examples2.png)
+![examples 3](./examples/examples3.png)
 
 ## Installation
 
@@ -27,8 +35,6 @@ pnpm add vue-aspect-ratio-box
 
 ### Global Registration
 
-**Vue 3:**
-
 ```javascript
 import { createApp } from 'vue'
 import VueAspectRatioBox from 'vue-aspect-ratio-box'
@@ -37,15 +43,6 @@ import App from './App.vue'
 const app = createApp(App)
 app.use(VueAspectRatioBox)
 app.mount('#app')
-```
-
-**Vue 2:**
-
-```javascript
-import Vue from 'vue'
-import VueAspectRatioBox from 'vue-aspect-ratio-box'
-
-Vue.use(VueAspectRatioBox)
 ```
 
 ### Local Registration
@@ -195,7 +192,6 @@ interface AspectRatioProps {
 
 ## Browser Compatibility
 
-- **Vue 2**: Requires Vue 2.6.0+
 - **Vue 3**: Requires Vue 3.0.0+
 - **Modern Browsers**: Uses native `aspect-ratio` CSS property when available
 - **Legacy Browsers**: Falls back to padding-based implementation
@@ -226,10 +222,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Changelog
 
-### 1.0.0
-
-- 🎉 initial release
-- ✨ supports Vue 2 and Vue 3
-- ✨ TypeScript support
-- ✨ flexible proportion control
-- ✨ responsive design
+See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes and version history.

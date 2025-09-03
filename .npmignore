@@ -10,7 +10,6 @@ tsconfig.json
 vite.config.ts
 
 # Test files
-vue2-compatibility-test.html
 
 # Build artifacts
 *.log

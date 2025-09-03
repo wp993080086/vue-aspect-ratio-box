@@ -13,15 +13,15 @@ export default defineConfig({
       formats: ['es', 'umd']
     },
     rollupOptions: {
-      external: ['vue', 'vue-demi'],
+      external: ['vue'],
       output: {
         globals: {
-          vue: 'Vue',
-          'vue-demi': 'VueDemi'
+          vue: 'Vue'
         }
       }
     },
-    sourcemap: true,
+    cssCodeSplit: false,
+    sourcemap: false,
     minify: 'terser'
   },
   resolve: {
