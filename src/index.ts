@@ -1,6 +1,6 @@
 import { App } from 'vue'
 import AspectRatioBox from './AspectRatioBox.vue'
-import type { AspectRatioProps } from './AspectRatioBox'
+import type { AspectRatioProps } from './types'
 
 export { AspectRatioBox }
 export type { AspectRatioProps }

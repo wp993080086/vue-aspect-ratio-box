@@ -6,7 +6,7 @@
 		</div>
 		<!-- 旧版浏览器 -->
 		<div class="aspect-ratio-shell-ancient" :style="shellStyleAncient">
-			<div v-if="$props.height" ref="calculateRef" class="aspect-ratio-calculate" :style="{ height: typeof $props.height === 'number' ? `${$props.height}px` : $props.height }" />
+			<div v-if="$props.height !== undefined" ref="calculateRef" class="aspect-ratio-calculate" :style="{ height: typeof $props.height === 'number' ? `${$props.height}px` : $props.height }" />
 			<div class="aspect-ratio-content">
 				<slot />
 			</div>
@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, onMounted, onUnmounted, PropType } from 'vue'
-import type { AspectRatioProps } from './AspectRatioBox'
+import { defineComponent, computed, ref, onMounted, onUnmounted, watch, PropType } from 'vue'
+import type { AspectRatioProps } from './types'
 
 export default defineComponent({
 	name: 'AspectRatioBox',
@@ -40,14 +40,15 @@ export default defineComponent({
 	setup(props: AspectRatioProps) {
 		const wrapperRef = ref<HTMLElement>()
 		const calculateRef = ref<HTMLElement>()
-		const parentWidth = ref(0)
+		const calculateHeight = ref(0)
+		let resizeObserver: ResizeObserver | null = null
 
 		/**
 		 * @description 注入CSS样式
 		 */
 		const injectCSS = () => {
 			const styleId = 'vue-aspect-ratio-box-styles'
-			if (typeof document !== 'undefined' && !document.getElementById(styleId)) {
+			if (!document.getElementById(styleId)) {
 				const style = document.createElement('style')
 				style.id = styleId
 				style.textContent = `
@@ -82,50 +83,28 @@ export default defineComponent({
 		}
 
 		/**
-		 * @description 计算比例百分比
-		 * @description 如果有宽 则是根据宽求高，反之则是根据高求宽。
+		 * @description 计算宽度场景下的 paddingTop 百分比
+		 * @description paddingTop 百分比相对于父容器宽度计算
 		 */
 		const aspectRatioPercent = computed(() => {
 			const [w, h] = props.ratio
-			let ratio = 0
-			if (props.width != undefined) {
-				ratio = (h / w) * 100
-			} else {
-				ratio = (w / h) * 100
-			}
-			return ratio.toFixed(2)
+			return ((h / w) * 100).toFixed(2)
 		})
 
 		/**
-		 * @description 获取父元素宽度
+		 * @description 监听 calculateRef 尺寸变化，用于旧版浏览器 height 场景计算 width
 		 */
-		const updateParentWidth = () => {
-			if (wrapperRef.value && wrapperRef.value.parentElement) {
-				parentWidth.value = wrapperRef.value.parentElement.clientWidth
+		watch(calculateRef, (el) => {
+			resizeObserver?.disconnect()
+			resizeObserver = null
+			if (el) {
+				resizeObserver = new ResizeObserver((entries) => {
+					for (const entry of entries) {
+						calculateHeight.value = entry.contentRect.height
+					}
+				})
+				resizeObserver.observe(el)
 			}
-		}
-
-		/**
-		 * @description 监听窗口大小变化
-		 */
-		const handleResize = () => {
-			updateParentWidth()
-		}
-
-		/**
-		 * @description 生命周期-装载
-		 */
-		onMounted(() => {
-			injectCSS()
-			updateParentWidth()
-			window.addEventListener('resize', handleResize)
-		})
-
-		/**
-		 * @description 生命周期-卸载
-		 */
-		onUnmounted(() => {
-			window.removeEventListener('resize', handleResize)
 		})
 
 		/**
@@ -151,11 +130,11 @@ export default defineComponent({
 		const shellStyleModern = computed(() => {
 			const style: Record<string, string> = {}
 			if (props.width !== undefined) {
-				// 如果指定了width，使用指定的宽度
-				style.width = typeof props.width === 'number' ? `${props.width}px` : '100%'
+				// 宽度由 wrapper 控制，shell 继承 100%
+				style.width = '100%'
 			} else if (props.height !== undefined) {
-				// 如果指定了height，使用指定的高度
-				style.height = typeof props.height === 'number' ? `${props.height}px` : '100%'
+				// 高度由 wrapper 控制，shell 继承 100%
+				style.height = '100%'
 			}
 			// 设置比例
 			style.aspectRatio = `${props.ratio[0]} / ${props.ratio[1]}`
@@ -175,14 +154,27 @@ export default defineComponent({
 				style.width = '100%'
 				style.paddingTop = `${aspectRatioPercent}%`
 			} else if (props.height !== undefined) {
-				// 如果指定了height
+				// 如果指定了height，通过 calculateHeight 计算宽度
 				style.height = '100%'
-				if (calculateRef.value) {
-					const h = calculateRef.value.clientHeight
-					style.width = `${(h * props.ratio[0]) / props.ratio[1]}px`
+				if (calculateHeight.value) {
+					style.width = `${(calculateHeight.value * props.ratio[0]) / props.ratio[1]}px`
 				}
 			}
 			return style
+		})
+
+		/**
+		 * @description 生命周期-装载
+		 */
+		onMounted(() => {
+			injectCSS()
+		})
+
+		/**
+		 * @description 生命周期-卸载
+		 */
+		onUnmounted(() => {
+			resizeObserver?.disconnect()
 		})
 
 		return {

@@ -61,6 +61,7 @@
 			.demo-item {
 				border-radius: 8px;
 				overflow: hidden;
+				font-size: 14px;;
 			}
 
 			.demo-content {
@@ -85,6 +86,17 @@
 				font-family: 'Courier New', monospace;
 				margin-top: 15px;
 				font-size: 14px;
+			}
+
+			/* 移动端响应式 */
+			@media (max-width: 768px) {
+				.example-group {
+					flex-direction: column;
+				}
+
+				.example-section {
+					padding: 15px;
+				}
 			}
 		</style>
 	</head>
@@ -148,20 +160,20 @@
 					<h2 class="example-title">3. 指定高度示例</h2>
 					<div class="example-group">
 						<div class="example-group-item">
-							<aspect-ratio-box :ratio="[1, 1]" height="150px">
+							<aspect-ratio-box :ratio="[1, 1]" height="100px">
 								<div class="demo-content demo-item">
-									<p>高度: 150px</p>
+									<p>高度: 100px</p>
 									<p>比例: 1:1</p>
-									<p>适合：头像，卡片</p>
+									<p>适合：头像</p>
 								</div>
 							</aspect-ratio-box>
 						</div>
 						<div class="example-group-item">
-							<aspect-ratio-box :ratio="[16, 9]" :height="200">
+							<aspect-ratio-box :ratio="[16, 9]" :height="100">
 								<div class="demo-content demo-item">
-									<p>高度: 200px</p>
+									<p>高度: 100px</p>
 									<p>比例: 16:9</p>
-									<p>适合：视频，壁纸</p>
+									<p>适合：视频</p>
 								</div>
 							</aspect-ratio-box>
 						</div>
@@ -173,7 +185,7 @@
 
 		<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 		<script>
-			const { createApp, defineComponent, computed, ref, onMounted, onUnmounted } = Vue
+			const { createApp, defineComponent, computed, ref, onMounted, onUnmounted, watch } = Vue
 
 			// 直接定义 AspectRatioBox 组件（纯 Vue 3 版本）
 			const AspectRatioBox = defineComponent({
@@ -196,63 +208,61 @@
 					},
 				},
 				setup(props) {
-					const wrapperRef = ref()
-					const calculateRef = ref()
-					const parentWidth = ref(0)
+				const wrapperRef = ref()
+				const calculateRef = ref()
+				const calculateHeight = ref(0)
+				let resizeObserver = null
 
-					/**
-					 * @description 计算格式化
-					 */
-					const calculateFormat = (value) => {
-						const newValue = typeof value === 'number' ? `${value}px` : value
-						return newValue
+				/**
+				 * @description 计算格式化
+				 */
+				const calculateFormat = (value) => {
+					const newValue = typeof value === 'number' ? `${value}px` : value
+					return newValue
+				}
+
+				/**
+				 * @description 计算宽度场景下的 paddingTop 百分比
+				 * @description paddingTop 百分比相对于父容器宽度计算
+				 */
+				const aspectRatioPercent = computed(() => {
+					const [w, h] = props.ratio || [1, 1]
+					return ((h / w) * 100).toFixed(2)
+				})
+
+				/**
+				 * @description 监听 calculateRef 尺寸变化，用于旧版浏览器 height 场景计算 width
+				 */
+				watch(calculateRef, (el) => {
+					if (resizeObserver) {
+						resizeObserver.disconnect()
+						resizeObserver = null
 					}
-
-					/**
-					 * @description 计算比例百分比
-					 * @description 如果有宽 则是根据宽求高，反之则是根据高求宽。
-					 */
-					const aspectRatioPercent = computed(() => {
-						const [w, h] = props.ratio || [1, 1]
-						let ratio = 0
-						if (props.width != undefined) {
-							ratio = (h / w) * 100
-						} else {
-							ratio = (w / h) * 100
-						}
-						return ratio.toFixed(2)
-					})
-
-					/**
-					 * @description 获取父元素宽度
-					 */
-					const updateParentWidth = () => {
-						if (wrapperRef.value && wrapperRef.value.parentElement) {
-							parentWidth.value = wrapperRef.value.parentElement.clientWidth
-						}
+					if (el) {
+						resizeObserver = new ResizeObserver((entries) => {
+							for (const entry of entries) {
+								calculateHeight.value = entry.contentRect.height
+							}
+						})
+						resizeObserver.observe(el)
 					}
+				})
 
-					/**
-					 * @description 监听窗口大小变化
-					 */
-					const handleResize = () => {
-						updateParentWidth()
+				/**
+				 * @description 生命周期-装载
+				 */
+				onMounted(() => {
+					// CSS 已通过 <style> 块注入
+				})
+
+				/**
+				 * @description 生命周期-卸载
+				 */
+				onUnmounted(() => {
+					if (resizeObserver) {
+						resizeObserver.disconnect()
 					}
-
-					/**
-					 * @description 生命周期-装载
-					 */
-					onMounted(() => {
-						updateParentWidth()
-						window.addEventListener('resize', handleResize)
-					})
-
-					/**
-					 * @description 生命周期-卸载
-					 */
-					onUnmounted(() => {
-						window.removeEventListener('resize', handleResize)
-					})
+				})
 
 					/**
 					 * @description 计算wrapper样式
@@ -272,66 +282,66 @@
 					})
 
 					/**
-					 * @description 计算shell样式（现代浏览器）
-					 */
-					const shellStyleModern = computed(() => {
-						const style = {}
-						if (props.width !== undefined) {
-							// 如果指定了width，使用指定的宽度
-							style.width = typeof props.width === 'number' ? `${props.width}px` : '100%'
-						} else if (props.height !== undefined) {
-							// 如果指定了height，使用指定的高度
-							style.height = typeof props.height === 'number' ? `${props.height}px` : '100%'
-						}
-						// 设置比例
-						style.aspectRatio = `${props.ratio[0]} / ${props.ratio[1]}`
-						return style
-					})
-
-					/**
-					 * @description 计算shell样式（旧代浏览器）
-					 * @description 高度计算原理：百分比的padding，是相对于父容器的宽度来计算的
-					 */
-					const shellStyleAncient = computed(() => {
-						const style = {
-							position: 'relative',
-						}
-						// 如果指定了宽度 则使用padding-top撑起高度
-						if (props.width !== undefined) {
-							style.width = '100%'
-							style.paddingTop = `${aspectRatioPercent}%`
-						} else if (props.height !== undefined) {
-							// 如果指定了height
-							style.height = '100%'
-							if (calculateRef.value) {
-								const h = calculateRef.value.clientHeight
-								style.width = `${(h * props.ratio[0]) / props.ratio[0]}px`
-							}
-						}
-						return style
-					})
-
-					return {
-						wrapperRef,
-						wrapperStyle,
-						shellStyleModern,
-						shellStyleAncient,
-						calculateFormat,
+				 * @description 计算shell样式（现代浏览器）
+				 */
+				const shellStyleModern = computed(() => {
+					const style = {}
+					if (props.width !== undefined) {
+						// 宽度由 wrapper 控制，shell 继承 100%
+						style.width = '100%'
+					} else if (props.height !== undefined) {
+						// 高度由 wrapper 控制，shell 继承 100%
+						style.height = '100%'
 					}
-				},
-				template: `<div ref="wrapperRef" class="aspect-ratio-box" :style="wrapperStyle">
-				<!-- 现代的 -->
-				<div class="aspect-ratio-shell-modern" :style="shellStyleModern">
+					// 设置比例
+					style.aspectRatio = `${props.ratio[0]} / ${props.ratio[1]}`
+					return style
+				})
+
+				/**
+				 * @description 计算shell样式（旧版浏览器）
+				 * @description 高度计算原理：百分比的padding，是相对于父容器的宽度来计算的
+				 */
+				const shellStyleAncient = computed(() => {
+					const style = {
+						position: 'relative',
+					}
+					// 如果指定了宽度 则使用padding-top撑起高度
+					if (props.width !== undefined) {
+						style.width = '100%'
+						style.paddingTop = `${aspectRatioPercent}%`
+					} else if (props.height !== undefined) {
+						// 如果指定了height，通过 calculateHeight 计算宽度
+						style.height = '100%'
+						if (calculateHeight.value) {
+							style.width = `${(calculateHeight.value * props.ratio[0]) / props.ratio[1]}px`
+						}
+					}
+					return style
+				})
+
+				return {
+					wrapperRef,
+					calculateRef,
+					wrapperStyle,
+					shellStyleModern,
+					shellStyleAncient,
+					calculateFormat,
+				}
+			},
+			template: `<div ref="wrapperRef" class="aspect-ratio-box" :style="wrapperStyle">
+			<!-- 现代的 -->
+			<div class="aspect-ratio-shell-modern" :style="shellStyleModern">
+				<slot />
+			</div>
+			<!-- 旧代的 -->
+			<div class="aspect-ratio-shell-ancient" :style="shellStyleAncient">
+				<div v-if="height !== undefined" ref="calculateRef" class="aspect-ratio-calculate" :style="{ height: calculateFormat(height) }" />
+				<div class="aspect-ratio-content">
 					<slot />
 				</div>
-				<!-- 旧代的 -->
-				<div class="aspect-ratio-shell-ancient" :style="shellStyleAncient">
-					<div ref="calculateRef" class="aspect-ratio-calculate" :style="{ height: calculateFormat(props?.height || undefined) }" />
-					<div class="aspect-ratio-content">
-						<slot />
-					</div>
-				</div>
-			</div>`,
+			</div>
+		</div>`,
 			})
 
 			// 创建 Vue 应用
