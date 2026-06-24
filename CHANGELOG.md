@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.9] - 2026-06-24
+
+- 🔧 **Build Process**: Set `output.exports: 'named'` in Vite config to fix UMD bundle export warning
+- 📦 **Package**: Add `exports` field for modern Node.js resolution
+- 📦 **Package**: Add `sideEffects: false` to enable consumer tree-shaking
+
+## [1.1.8] - 2024-01-XX
+
+- 📝 **Documentation**: No changelog record was provided for this version
+
 ## [1.1.7] - 2024-01-XX
 
 - 🐛 **Bug Fixes**: Fixed TypeScript type definition generation issues
@@ -39,6 +49,16 @@ All notable changes to this project will be documented in this file.
 ## 更新日志
 
 本项目的所有重要变更都将记录在此文件中。
+
+## [1.1.9] - 2026-06-24
+
+- 🔧 **构建流程**: 在 Vite 配置中设置 `output.exports: 'named'`，修复 UMD 包导出警告
+- 📦 **包管理**: 添加 `exports` 字段以支持现代 Node.js 模块解析
+- 📦 **包管理**: 添加 `sideEffects: false` 以便消费方进行 tree-shaking
+
+## [1.1.8] - 2024-01-XX
+
+- 📝 **文档**: 该版本未提供变更记录
 
 ## [1.1.7] - 2024-01-XX
 

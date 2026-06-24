@@ -1,10 +1,18 @@
 {
 	"name": "vue-aspect-ratio-box",
-	"version": "1.1.8",
+	"version": "1.1.9",
 	"description": "Vue.js aspect ratio component (supports Vue 3, flexible width/height).",
 	"main": "dist/index.umd.js",
 	"module": "dist/index.es.js",
 	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.es.js",
+			"require": "./dist/index.umd.js"
+		}
+	},
+	"sideEffects": false,
 	"files": [
 		"dist"
 	],
