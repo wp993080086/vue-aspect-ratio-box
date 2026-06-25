@@ -2,17 +2,17 @@
 
 [中文文档](./README_zh.md) | English
 
-A Vue.js component for maintaining aspect ratios, supporting Vue 3 with flexible width/height control.
+A Vue.js component for maintaining aspect ratios, supporting both Vue 2.7+ and Vue 3 with flexible width/height control.
 
 ## Features
 
 - 🎯 **Precise Ratio Control**: Support for any aspect ratio settings
 - 🔧 **Flexible Size Control**: Specify width or height, automatically calculate the other dimension
 - 📱 **Responsive Design**: Adapts to parent container width by default
-- 🚀 **Vue 3 Compatible**: Supports Vue 3.0+
+- 🚀 **Vue 2.7+ & Vue 3 Compatible**: Supports both Vue 2.7+ and Vue 3 via `vue-demi`
 - 📝 **TypeScript Support**: Complete type definitions
 - 🎨 **Zero Style Intrusion**: Does not affect content styles
-- 😄 **Compatibility**: Downgraded compatibility
+- 😄 **Compatibility**: Downgraded browser support via padding-based fallback
 
 
 ## Legend
@@ -31,9 +31,11 @@ yarn add vue-aspect-ratio-box
 pnpm add vue-aspect-ratio-box
 ```
 
+> **Note**: This component requires `vue` (Vue 2.7+ or Vue 3) as a peer dependency and uses `vue-demi` internally for cross-version compatibility.
+
 ## Usage
 
-### Global Registration
+### Global Registration (Vue 3)
 
 ```javascript
 import { createApp } from 'vue'
@@ -43,6 +45,20 @@ import App from './App.vue'
 const app = createApp(App)
 app.use(VueAspectRatioBox)
 app.mount('#app')
+```
+
+### Global Registration (Vue 2.7)
+
+```javascript
+import Vue from 'vue'
+import VueAspectRatioBox from 'vue-aspect-ratio-box'
+import App from './App.vue'
+
+Vue.use(VueAspectRatioBox)
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app')
 ```
 
 ### Local Registration
@@ -192,7 +208,7 @@ interface AspectRatioProps {
 
 ## Browser Compatibility
 
-- **Vue 3**: Requires Vue 3.0.0+
+- **Vue**: Requires Vue 2.7.0+ or Vue 3.0.0+
 - **Modern Browsers**: Uses native `aspect-ratio` CSS property when available
 - **Legacy Browsers**: Falls back to padding-based implementation
 

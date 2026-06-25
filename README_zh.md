@@ -2,17 +2,17 @@
 
 中文文档 | [English](./README.md)
 
-一个用于维持宽高比的 Vue.js 组件，支持 Vue 3，提供灵活的宽度/高度控制。
+一个用于维持宽高比的 Vue.js 组件，同时支持 Vue 2.7+ 和 Vue 3，提供灵活的宽度/高度控制。
 
 ## 特性
 
 - 🎯 **精确比例控制**: 支持任意宽高比例设置
 - 🔧 **灵活尺寸控制**: 可指定宽度或高度，自动计算另一维度
 - 📱 **响应式设计**: 默认适应父容器宽度
-- 🚀 **Vue 3 兼容**: 支持 Vue 3.0+
+- 🚀 **Vue 2.7+ & Vue 3 兼容**: 通过 `vue-demi` 同时支持 Vue 2.7+ 和 Vue 3
 - 📝 **TypeScript 支持**: 完整的类型定义
 - 🎨 **零样式侵入**: 不影响内容样式
-- 😄 **兼容性**: 向下兼容性支持
+- 😄 **兼容性**: 旧版浏览器通过 padding 方案降级支持
 
 ## 图例
 
@@ -30,9 +30,11 @@ yarn add vue-aspect-ratio-box
 pnpm add vue-aspect-ratio-box
 ```
 
+> **注意**: 本组件需要 `vue`（Vue 2.7+ 或 Vue 3）作为 peer dependency，内部通过 `vue-demi` 实现跨版本兼容。
+
 ## 使用方法
 
-### 全局注册
+### 全局注册（Vue 3）
 
 ```javascript
 import { createApp } from 'vue'
@@ -42,6 +44,20 @@ import App from './App.vue'
 const app = createApp(App)
 app.use(VueAspectRatioBox)
 app.mount('#app')
+```
+
+### 全局注册（Vue 2.7）
+
+```javascript
+import Vue from 'vue'
+import VueAspectRatioBox from 'vue-aspect-ratio-box'
+import App from './App.vue'
+
+Vue.use(VueAspectRatioBox)
+
+new Vue({
+  render: h => h(App)
+}).$mount('#app')
 ```
 
 ### 局部注册
@@ -169,8 +185,9 @@ interface AspectRatioProps {
 
 ## 兼容性
 
-- Vue 3: 需要 Vue 3.0.0+
-- 现代浏览器 (IE11+)
+- Vue: 需要 Vue 2.7.0+ 或 Vue 3.0.0+
+- 现代浏览器使用原生 `aspect-ratio` CSS 属性
+- 旧版浏览器降级为 padding 方案实现
 
 ## 许可证
 

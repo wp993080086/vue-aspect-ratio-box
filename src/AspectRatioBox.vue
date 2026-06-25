@@ -1,21 +1,5 @@
-<template>
-	<div ref="wrapperRef" class="aspect-ratio-box" :style="wrapperStyle">
-		<!-- 现代浏览器 -->
-		<div class="aspect-ratio-shell-modern" :style="shellStyleModern">
-			<slot />
-		</div>
-		<!-- 旧版浏览器 -->
-		<div class="aspect-ratio-shell-ancient" :style="shellStyleAncient">
-			<div v-if="$props.height !== undefined" ref="calculateRef" class="aspect-ratio-calculate" :style="{ height: typeof $props.height === 'number' ? `${$props.height}px` : $props.height }" />
-			<div class="aspect-ratio-content">
-				<slot />
-			</div>
-		</div>
-	</div>
-</template>
-
 <script lang="ts">
-import { defineComponent, computed, ref, onMounted, onUnmounted, watch, PropType } from 'vue'
+import { defineComponent, computed, ref, onMounted, onUnmounted, watch, h, type PropType } from 'vue-demi'
 import type { AspectRatioProps } from './types'
 
 export default defineComponent({
@@ -37,7 +21,7 @@ export default defineComponent({
 			default: undefined,
 		},
 	},
-	setup(props: AspectRatioProps) {
+	setup(props: AspectRatioProps, { slots }) {
 		const wrapperRef = ref<HTMLElement>()
 		const calculateRef = ref<HTMLElement>()
 		const calculateHeight = ref(0)
@@ -152,7 +136,7 @@ export default defineComponent({
 			// 如果指定了宽度 则使用padding-top撑起高度
 			if (props.width !== undefined) {
 				style.width = '100%'
-				style.paddingTop = `${aspectRatioPercent}%`
+				style.paddingTop = `${aspectRatioPercent.value}%`
 			} else if (props.height !== undefined) {
 				// 如果指定了height，通过 calculateHeight 计算宽度
 				style.height = '100%'
@@ -177,12 +161,57 @@ export default defineComponent({
 			resizeObserver?.disconnect()
 		})
 
-		return {
-			wrapperRef,
-			calculateRef,
-			wrapperStyle,
-			shellStyleModern,
-			shellStyleAncient,
+		/**
+		 * @description render 函数
+		 * @description 通过 setup 返回 render 函数，可直接访问 setup 作用域内的 ref 对象
+		 * @description Vue 2.7 与 Vue 3 均支持 setup 返回 render 函数
+		 */
+		return () => {
+			// Vue 2.7 与 Vue 3 的 setup context 中 slots.default 均为函数，统一调用
+			const slotVnodes = slots.default?.() ?? []
+
+			return h(
+				'div',
+				{
+					ref: wrapperRef,
+					class: 'aspect-ratio-box',
+					style: wrapperStyle.value,
+				},
+				[
+					// 现代浏览器
+					h(
+						'div',
+						{
+							class: 'aspect-ratio-shell-modern',
+							style: shellStyleModern.value,
+						},
+						slotVnodes,
+					),
+					// 旧版浏览器
+					h(
+						'div',
+						{
+							class: 'aspect-ratio-shell-ancient',
+							style: shellStyleAncient.value,
+						},
+						[
+							props.height !== undefined
+								? h('div', {
+										ref: calculateRef,
+										class: 'aspect-ratio-calculate',
+										style: {
+											height:
+												typeof props.height === 'number'
+													? `${props.height}px`
+													: props.height,
+										},
+								  })
+								: null,
+							h('div', { class: 'aspect-ratio-content' }, slotVnodes),
+						],
+					),
+				],
+			)
 		}
 	},
 })

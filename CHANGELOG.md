@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2026-06-25
+
+- 🚀 **Feature**: Restore Vue 2.7+ support, now compatible with both Vue 2.7+ and Vue 3
+- 🔄 **Refactor**: Migrate from SFC template to render function for cross-version compatibility
+- 📦 **Dependencies**: Add `vue-demi` as dependency for unified Vue 2/3 API
+- 📦 **Package**: Update `peerDependencies` to `vue: ^2.7.0 || ^3.0.0`
+- 🐛 **Bug Fixes**: Fix slot content not rendering in Vue 2.7 (slots.default is a function, not array)
+- 🐛 **Bug Fixes**: Fix UMD bundle failing to load in Vue 3 global build (window.Vue.use is not a function)
+- 🔧 **Build**: Add `vue-demi` to rollup externals and globals
+
 ## [1.1.9] - 2026-06-24
 
 - 🔧 **Build Process**: Set `output.exports: 'named'` in Vite config to fix UMD bundle export warning
@@ -49,6 +59,16 @@ All notable changes to this project will be documented in this file.
 ## 更新日志
 
 本项目的所有重要变更都将记录在此文件中。
+
+## [1.2.0] - 2026-06-25
+
+- 🚀 **新功能**: 恢复 Vue 2.7+ 支持，现在同时兼容 Vue 2.7+ 和 Vue 3
+- 🔄 **重构**: 从 SFC template 迁移到 render 函数，实现跨版本兼容
+- 📦 **依赖**: 添加 `vue-demi` 作为依赖，统一 Vue 2/3 API 调用
+- 📦 **包管理**: 更新 `peerDependencies` 为 `vue: ^2.7.0 || ^3.0.0`
+- 🐛 **问题修复**: 修复 Vue 2.7 下 slot 内容不渲染的问题（slots.default 是函数而非数组）
+- 🐛 **问题修复**: 修复 UMD 产物在 Vue 3 全局构建下加载失败的问题（window.Vue.use 不是函数）
+- 🔧 **构建**: 将 `vue-demi` 添加到 rollup externals 和 globals
 
 ## [1.1.9] - 2026-06-24
 

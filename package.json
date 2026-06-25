@@ -1,7 +1,7 @@
 {
 	"name": "vue-aspect-ratio-box",
-	"version": "1.1.9",
-	"description": "Vue.js aspect ratio component (supports Vue 3, flexible width/height).",
+	"version": "1.2.0",
+	"description": "Vue.js aspect ratio component (supports Vue 2.7+ and Vue 3, flexible width/height).",
 	"main": "dist/index.umd.js",
 	"module": "dist/index.es.js",
 	"types": "dist/index.d.ts",
@@ -14,7 +14,11 @@
 	},
 	"sideEffects": false,
 	"files": [
-		"dist"
+		"dist",
+		"README.md",
+		"README_zh.md",
+		"CHANGELOG.md",
+		"LICENSE"
 	],
 	"scripts": {
 		"build": "vite build",
@@ -25,6 +29,7 @@
 	},
 	"keywords": [
 		"vue",
+		"vue2",
 		"vue3",
 		"aspect-ratio",
 		"responsive",
@@ -42,7 +47,10 @@
 	},
 	"homepage": "https://github.com/wp993080086/vue-aspect-ratio-box#readme",
 	"peerDependencies": {
-		"vue": "^3.0.0"
+		"vue": "^2.7.0 || ^3.0.0"
+	},
+	"dependencies": {
+		"vue-demi": "^0.14.0"
 	},
 	"devDependencies": {
 		"@types/node": "^24.3.0",
