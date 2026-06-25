@@ -1,41 +1,40 @@
 # Vue Aspect Ratio Box
 
-[中文文档](./README_zh.md) | English
+中文文档 | [English](./README_en.md)
 
-A Vue.js component for maintaining aspect ratios, supporting both Vue 2.7+ and Vue 3 with flexible width/height control.
+Vue宽高比组件，兼容Vue 3和Vue 2.7+，支持自定义的固定宽度/高度和自适应布局。
 
-## Features
+## 特性
 
-- 🎯 **Precise Ratio Control**: Support for any aspect ratio settings
-- 🔧 **Flexible Size Control**: Specify width or height, automatically calculate the other dimension
-- 📱 **Responsive Design**: Adapts to parent container width by default
-- 🚀 **Vue 2.7+ & Vue 3 Compatible**: Supports both Vue 2.7+ and Vue 3 via `vue-demi`
-- 📝 **TypeScript Support**: Complete type definitions
-- 🎨 **Zero Style Intrusion**: Does not affect content styles
-- 😄 **Compatibility**: Downgraded browser support via padding-based fallback
+- 🎯 **精确比例控制**: 支持任意宽/高比例设置
+- 🔧 **灵活尺寸控制**: 可指定宽度或高度，自动计算另一维度
+- 📱 **响应式设计**: 默认适应父容器宽度
+- 🚀 **Vue 2.7+ & Vue 3 兼容**: 通过 `vue-demi` 同时支持 Vue 2.7+ 和 Vue 3
+- 📝 **TypeScript 支持**: 完整的类型定义
+- 🎨 **零样式侵入**: 不影响内容样式
+- 😄 **兼容性**: 旧版浏览器通过 padding 方案降级支持
 
-
-## Legend
+## 图例
 
 ![examples 1](./examples/examples1.png)
 ![examples 2](./examples/examples2.png)
 ![examples 3](./examples/examples3.png)
 
-## Installation
+## 安装
 
 ```bash
 npm install vue-aspect-ratio-box
-# or
+# 或
 yarn add vue-aspect-ratio-box
-# or
+# 或
 pnpm add vue-aspect-ratio-box
 ```
 
-> **Note**: This component requires `vue` (Vue 2.7+ or Vue 3) as a peer dependency and uses `vue-demi` internally for cross-version compatibility.
+> **注意**: 本组件需要 `vue`（Vue 2.7+ 或 Vue 3）作为 peer dependency，内部通过 `vue-demi` 实现跨版本兼容。
 
-## Usage
+## 使用方法
 
-### Global Registration (Vue 3)
+### 全局注册（Vue 3+）
 
 ```javascript
 import { createApp } from 'vue'
@@ -47,7 +46,7 @@ app.use(VueAspectRatioBox)
 app.mount('#app')
 ```
 
-### Global Registration (Vue 2.7)
+### 全局注册（Vue 2.7+）
 
 ```javascript
 import Vue from 'vue'
@@ -61,36 +60,39 @@ new Vue({
 }).$mount('#app')
 ```
 
-### Local Registration
+### 局部注册
 
 ```javascript
 import { AspectRatioBox } from 'vue-aspect-ratio-box'
 
 export default {
-  components: {
-    AspectRatioBox
-  }
+	components: {
+		AspectRatioBox,
+	},
 }
 ```
 
-### Basic Usage
+### 基本用法
 
 ```vue
 <template>
-  <!-- 16:9 aspect ratio, adapts to parent width -->
-  <AspectRatioBox :ratio="[16, 9]">
-    <img src="your-image.jpg" alt="Image" />
-  </AspectRatioBox>
+	<!-- 16:9 比例，自适应父容器宽度 -->
+	<AspectRatioBox :ratio="[16, 9]">
+		<img src="your-image.jpg" alt="示例图片" />
+	</AspectRatioBox>
 
-  <!-- Specify width, height calculated automatically -->
-  <AspectRatioBox :ratio="[4, 3]" :width="400">
-    <div>Your content here</div>
-  </AspectRatioBox>
+	<!-- 3:4 比例，指定宽度为 300，默认单位px -->
+	<AspectRatioBox :ratio="[3, 4]" :width="300">
+		<div class="content">
+			<h3>标题</h3>
+			<p>内容区域</p>
+		</div>
+	</AspectRatioBox>
 
-  <!-- Specify height, width calculated automatically -->
-  <AspectRatioBox :ratio="[16, 9]" :height="200">
-    <video src="your-video.mp4" controls></video>
-  </AspectRatioBox>
+	<!-- 1:1 比例，指定高度为 200px -->
+	<AspectRatioBox :ratio="[1, 1]" height="200px">
+		<div class="square-content">正方形内容</div>
+	</AspectRatioBox>
 </template>
 ```
 
@@ -98,144 +100,103 @@ export default {
 
 ### Props
 
-| Prop | Type | Required | Default | Description |
-|------|------|----------|---------|-------------|
-| `ratio` | `[number, number]` | ✅ | - | Aspect ratio as `[width, height]` |
-| `width` | `number \| string` | ❌ | `undefined` | Fixed width (px or CSS units) |
-| `height` | `number \| string` | ❌ | `undefined` | Fixed height (px or CSS units) |
+| 属性     | 类型               | 必填 | 默认值      | 说明                                                                   |
+| -------- | ------------------ | ---- | ----------- | ---------------------------------------------------------------------- |
+| `ratio`  | `[number, number]` | ✅   | -           | 宽高比例，格式为 `[宽度, 高度]`                                        |
+| `width`  | `number \| string` | ❌   | `undefined` | 指定宽度，可以是数字(默认单位 px)或字符串 10%,200px,200rem,20vw 等单位 |
+| `height` | `number \| string` | ❌   | `undefined` | 指定高度，可以是数字(默认单位 px)或字符串 10%,200px,200rem,20vh 等单位 |
 
-### Behavior
+### 行为说明
 
-- **Default**: Adapts to parent container width, height calculated by ratio
-- **With `width`**: Uses specified width, height calculated by ratio
-- **With `height`**: Uses specified height, width calculated by ratio
-- **With both**: `width` takes precedence, `height` is ignored
+1. **仅指定 `ratio`**: 组件会适应父容器的宽度，并根据比例计算高度
+2. **指定 `width`**: 组件使用指定的宽度，根据比例计算高度
+3. **指定 `height`**: 组件根据比例计算宽度，使用指定的高度
+4. **同时指定 `width` 和 `height`**: `width` 优先级更高，不会取`height`
 
-## Examples
+### 插槽
 
-### Image Gallery
+| 插槽名    | 说明                                 |
+| --------- | ------------------------------------ |
+| `default` | 默认插槽，用于放置需要保持比例的内容 |
 
-```vue
-<template>
-  <div class="gallery">
-    <AspectRatioBox 
-      v-for="image in images" 
-      :key="image.id"
-      :ratio="[1, 1]" 
-      class="gallery-item"
-    >
-      <img :src="image.url" :alt="image.title" />
-    </AspectRatioBox>
-  </div>
-</template>
+## 示例
 
-<style>
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-</style>
-```
-
-### Video Player
+### 视频播放器
 
 ```vue
 <template>
-  <AspectRatioBox :ratio="[16, 9]" class="video-container">
-    <video 
-      src="your-video.mp4" 
-      controls 
-      class="video-player"
-    ></video>
-  </AspectRatioBox>
+	<AspectRatioBox :ratio="[16, 9]">
+		<video controls class="video-container">
+			<source src="video.mp4" type="video/mp4" />
+		</video>
+	</AspectRatioBox>
 </template>
 
 <style>
 .video-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.video-player {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 </style>
 ```
 
-### Card Layout
+### 卡片布局
 
 ```vue
 <template>
-  <div class="card-grid">
-    <AspectRatioBox 
-      v-for="card in cards" 
-      :key="card.id"
-      :ratio="[3, 4]" 
-      class="card"
-    >
-      <div class="card-content">
-        <h3>{{ card.title }}</h3>
-        <p>{{ card.description }}</p>
-      </div>
-    </AspectRatioBox>
-  </div>
+	<div class="card-grid">
+		<AspectRatioBox :ratio="[1, 1]" :width="200">
+			<div class="card">
+				<p>卡片标题</p>
+				<p>卡片内容</p>
+			</div>
+		</AspectRatioBox>
+	</div>
 </template>
+
+<style>
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 16px;
+}
+</style>
 ```
 
-## TypeScript Support
+## TypeScript 支持
 
-The component includes complete TypeScript definitions:
+组件提供完整的 TypeScript 类型定义：
 
 ```typescript
-import { AspectRatioBox } from 'vue-aspect-ratio-box'
-import type { AspectRatioProps } from 'vue-aspect-ratio-box'
+import { AspectRatioBox, AspectRatioProps } from 'vue-aspect-ratio-box'
 
-// Props type
+// Props 类型
 interface AspectRatioProps {
-  ratio: [number, number]
-  width?: number | string
-  height?: number | string
+	ratio: [number, number]
+	width?: number | string
+	height?: number | string
 }
 ```
 
-## Browser Compatibility
+## 兼容性
 
-- **Vue**: Requires Vue 2.7.0+ or Vue 3.0.0+
-- **Modern Browsers**: Uses native `aspect-ratio` CSS property when available
-- **Legacy Browsers**: Falls back to padding-based implementation
+- Vue: 需要 Vue 2.7.0+ 或 Vue 3+
+- 现代浏览器使用原生 `aspect-ratio` CSS 属性
+- 旧版浏览器降级为 padding 方案实现
 
-## Development
+## 许可证
 
-```bash
-# Install dependencies
-npm install
+MIT License - 详情请见 [LICENSE](LICENSE) 文件
 
-# Start development server
-npm run dev
+## 贡献
 
-# Build for production
-npm run build
+欢迎提交 Issue 和 Pull Request！
 
-# Generate type definitions
-npm run build:types
-```
+## 更新日志
 
-## License
-
-MIT License - see [LICENSE](LICENSE) file for details.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Changelog
-
-See [CHANGELOG.md](./CHANGELOG.md) for detailed release notes and version history.
+详细的版本发布说明和历史记录请查看 [CHANGELOG.md](./CHANGELOG.md)。

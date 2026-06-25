@@ -1,7 +1,7 @@
 {
 	"name": "vue-aspect-ratio-box",
-	"version": "1.2.0",
-	"description": "Vue.js aspect ratio component (supports Vue 2.7+ and Vue 3, flexible width/height).",
+	"version": "1.2.1",
+	"description": "Vue Aspect Ratio component, compatible with Vue 3 & Vue 2.7+, supports custom fixed width/height and auto adaptive layout.",
 	"main": "dist/index.umd.js",
 	"module": "dist/index.es.js",
 	"types": "dist/index.d.ts",
@@ -16,7 +16,7 @@
 	"files": [
 		"dist",
 		"README.md",
-		"README_zh.md",
+		"README_en.md",
 		"CHANGELOG.md",
 		"LICENSE"
 	],
@@ -31,10 +31,23 @@
 		"vue",
 		"vue2",
 		"vue3",
+		"vue-component",
+		"vue-plugin",
+		"vue-demi",
 		"aspect-ratio",
+		"aspect-ratio-box",
+		"ratio-box",
 		"responsive",
+		"responsive-layout",
+		"adaptive-layout",
+		"fixed-width",
+		"fixed-height",
+		"video-container",
+		"image-container",
+		"card-layout",
 		"component",
-		"typescript"
+		"typescript",
+		"tree-shaking"
 	],
 	"author": "wp993080086 <993080086@qq.com>",
 	"license": "MIT",

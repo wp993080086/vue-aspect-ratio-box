@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2026-06-25
+
+- 📝 **Docs**: Restructure README - Chinese as primary (`README.md`), English moved to `README_en.md`
+- 📝 **Docs**: Fix broken language switch links between README files
+- 📦 **Package**: Optimize `description` for better discoverability
+- 📦 **Package**: Expand `keywords` to improve AI crawler and npm search recognition
+- 📦 **Package**: Update `files` field to include `README_en.md`
+
 ## [1.2.0] - 2026-06-25
 
 - 🚀 **Feature**: Restore Vue 2.7+ support, now compatible with both Vue 2.7+ and Vue 3
@@ -59,6 +67,14 @@ All notable changes to this project will be documented in this file.
 ## 更新日志
 
 本项目的所有重要变更都将记录在此文件中。
+
+## [1.2.1] - 2026-06-25
+
+- 📝 **文档**: 重组 README 结构 - 中文作为主文档（`README.md`），英文版移至 `README_en.md`
+- 📝 **文档**: 修复 README 文件间的语言切换链接错误
+- 📦 **包管理**: 优化 `description` 描述，提升可发现性
+- 📦 **包管理**: 扩充 `keywords` 关键词，优化 AI 爬虫和 npm 搜索识别
+- 📦 **包管理**: 更新 `files` 字段以包含 `README_en.md`
 
 ## [1.2.0] - 2026-06-25
 
